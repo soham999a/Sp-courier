@@ -8,13 +8,13 @@
         content="Reliable courier service in Pipe Road. Fast, secure, and affordable parcel delivery.">
     <title>SP Courier - Reliable Courier Service in Pipe Road</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loader-content">
-            <img src="logo.png" alt="SP Courier" class="loader-logo">
             <div class="greeting-text" id="greeting"></div>
         </div>
     </div>
@@ -280,47 +280,53 @@
     </footer>
 
     <script>
-        // Loading Screen with Multilingual Greetings
+        // Loading Screen with Cool Text Animation
         const greetings = [
-            'Hello',      // English
-            'Namaste',    // Hindi
-            'Vanakkam',   // Tamil
-            'Namaskara',  // Kannada
-            'Salaam',     // Urdu
-            'Sat Sri Akal', // Punjabi
-            'Nomoshkar',  // Bengali
-            'Kemcho'      // Gujarati
+            'Hello',
+            'Namaste',
+            'Vanakkam',
+            'Sat Sri Akal',
+            'Welcome'
         ];
 
-        let currentGreeting = 0;
         const greetingElement = document.getElementById('greeting');
         const loadingScreen = document.getElementById('loading-screen');
+        let index = 0;
 
-        // Rotate through greetings
-        function showNextGreeting() {
-            greetingElement.style.opacity = '0';
+        function showGreeting() {
+            if (index >= greetings.length) {
+                // Animation complete
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500); // Shorter fade out
+                return;
+            }
+
+            // Set content
+            greetingElement.textContent = greetings[index];
+
+            // Animate In with class
+            greetingElement.className = 'greeting-text visible';
+
+            // Wait then Animate Out
             setTimeout(() => {
-                greetingElement.textContent = greetings[currentGreeting];
-                greetingElement.style.opacity = '1';
-                currentGreeting = (currentGreeting + 1) % greetings.length;
-            }, 300);
+                // Don't animate out the last one, just fade screen
+                if (index < greetings.length - 1) {
+                    greetingElement.className = 'greeting-text hidden';
+                } else {
+                    // Ensure final state is visible for fade out
+                    greetingElement.className = 'greeting-text visible';
+                }
+
+                index++;
+                // Slight delay before next greeting to allow exit animation
+                setTimeout(showGreeting, 100);
+            }, 400); // Faster duration greeting stays visible
         }
 
-        // Show first greeting immediately
-        greetingElement.textContent = greetings[0];
-        greetingElement.style.opacity = '1';
-
-        // Rotate greetings every 400ms
-        const greetingInterval = setInterval(showNextGreeting, 400);
-
-        // Hide loading screen after 2 seconds
-        setTimeout(() => {
-            clearInterval(greetingInterval);
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }, 2000);
+        // Slight initial delay
+        setTimeout(showGreeting, 100); // Faster start
 
         // Glassmorphism navbar on scroll
         const header = document.querySelector('.header');
