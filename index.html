@@ -11,6 +11,14 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <img src="logo.png" alt="SP Courier" class="loader-logo">
+            <div class="greeting-text" id="greeting"></div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -272,6 +280,48 @@
     </footer>
 
     <script>
+        // Loading Screen with Multilingual Greetings
+        const greetings = [
+            'Hello',      // English
+            'Namaste',    // Hindi
+            'Vanakkam',   // Tamil
+            'Namaskara',  // Kannada
+            'Salaam',     // Urdu
+            'Sat Sri Akal', // Punjabi
+            'Nomoshkar',  // Bengali
+            'Kemcho'      // Gujarati
+        ];
+
+        let currentGreeting = 0;
+        const greetingElement = document.getElementById('greeting');
+        const loadingScreen = document.getElementById('loading-screen');
+
+        // Rotate through greetings
+        function showNextGreeting() {
+            greetingElement.style.opacity = '0';
+            setTimeout(() => {
+                greetingElement.textContent = greetings[currentGreeting];
+                greetingElement.style.opacity = '1';
+                currentGreeting = (currentGreeting + 1) % greetings.length;
+            }, 300);
+        }
+
+        // Show first greeting immediately
+        greetingElement.textContent = greetings[0];
+        greetingElement.style.opacity = '1';
+
+        // Rotate greetings every 400ms
+        const greetingInterval = setInterval(showNextGreeting, 400);
+
+        // Hide loading screen after 2 seconds
+        setTimeout(() => {
+            clearInterval(greetingInterval);
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 2000);
+
         // Glassmorphism navbar on scroll
         const header = document.querySelector('.header');
 
