@@ -217,6 +217,12 @@ p {
     transition: transform var(--transition-fast);
 }
 
+.logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
 @media (hover: hover) {
     .logo:hover {
         transform: scale(1.05);
